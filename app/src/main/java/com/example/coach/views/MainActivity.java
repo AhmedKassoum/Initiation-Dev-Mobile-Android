@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextTaille;
     private EditText editTextAge;
     private RadioButton radioButtonSexe;
+    private RadioButton radioButtonFemme;
     private TextView textViewIMG;
     private ImageView imageView;
     private ProfileControlleur controlleur;
@@ -41,12 +42,14 @@ public class MainActivity extends AppCompatActivity {
         editTextTaille=(EditText) findViewById(R.id.editTextNumberTaille);
         editTextAge=(EditText) findViewById(R.id.editTextNumberAge);
         radioButtonSexe=(RadioButton)findViewById(R.id.radioButtonHomme);
+        radioButtonFemme=(RadioButton)findViewById(R.id.radioButtonFemme);
         textViewIMG=(TextView)findViewById(R.id.textViewIMG);
         imageView=(ImageView)findViewById(R.id.imageView);
 
-        this.controlleur=ProfileControlleur.getInstance();
+        this.controlleur=ProfileControlleur.getInstance(this);
 
         ecouteCalculHandler();
+        getProfile();
     }
 
     /**
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void afficheResult(Integer poids, Integer taille, Integer age, Integer sexe) {
-        this.controlleur.createProfile(poids,taille,age,sexe);
+        this.controlleur.createProfile(poids,taille,age,sexe,this);
         float img=this.controlleur.getIMG();
         String indication=this.controlleur.getIndication();
 
@@ -104,5 +107,19 @@ public class MainActivity extends AppCompatActivity {
 
         textViewIMG.setText(String.format("%.01f",img)+" IMG "+indication);
 
+    }
+
+    private void getProfile(){
+        if (controlleur.getPoids()!=null){
+            editTextPoids.setText(controlleur.getPoids().toString());
+            editTextAge.setText(controlleur.getAge().toString());
+            editTextTaille.setText(controlleur.getTaille().toString());
+            radioButtonFemme.setChecked(true);
+
+            if (controlleur.getSexe()==1){
+                radioButtonSexe.setChecked(true);
+            }
+            ((Button)findViewById(R.id.buttonCalculer)).performClick(); // Simule le click sur le boutton Calculer
+        }
     }
 }

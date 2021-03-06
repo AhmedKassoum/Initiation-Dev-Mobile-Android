@@ -15,4 +15,5 @@ public class ProfileTest extends TestCase {
     public void testGetIndication() {
         assertEquals(message,profile.getIndication());
     }
+
 }
