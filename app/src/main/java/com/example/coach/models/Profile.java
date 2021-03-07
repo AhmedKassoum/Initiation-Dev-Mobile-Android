@@ -1,8 +1,11 @@
 package com.example.coach.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Profile implements Serializable {
+
+    private Date dateMesure;
     private static final Integer minHomme=10;
     private static final Integer maxHomme=25;
     private static final Integer minFemme=15;
@@ -15,11 +18,12 @@ public class Profile implements Serializable {
     private float img;
     private String indication;
 
-    public Profile(Integer poids, Integer taille, Integer age, Integer sexe) {
+    public Profile(Integer poids, Integer taille, Integer age, Integer sexe,Date dateMesure) {
         this.poids = poids;
         this.taille = taille;
         this.age = age;
         this.sexe = sexe;
+        this.dateMesure=dateMesure;
         this.calculIMG();
         this.resultIMG();
     }
@@ -46,6 +50,10 @@ public class Profile implements Serializable {
 
     public String getIndication() {
         return indication;
+    }
+
+    public Date getDateMesure() {
+        return dateMesure;
     }
 
     private void calculIMG(){

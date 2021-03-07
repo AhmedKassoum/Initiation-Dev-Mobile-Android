@@ -109,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Recuperation du profile par serialisation
+     */
     private void getProfile(){
         if (controlleur.getPoids()!=null){
             editTextPoids.setText(controlleur.getPoids().toString());

@@ -2,14 +2,18 @@ package com.example.coach.controllers;
 
 import android.content.Context;
 
+import com.example.coach.models.AccesLocal;
 import com.example.coach.models.Profile;
 import com.example.coach.outils.Serializer;
+
+import java.util.Date;
 
 public final class ProfileControlleur {
 
     private static ProfileControlleur instance=null;
     private static Profile profile;
     private static String fineName="saveProfile";
+    private static AccesLocal local;
 
     /**
      * Constructeur
@@ -25,7 +29,9 @@ public final class ProfileControlleur {
     public static final ProfileControlleur getInstance(Context context){ // Pattern Singleton
         if(ProfileControlleur.instance==null){
             ProfileControlleur.instance=new ProfileControlleur();
-            getSerialize(context);
+            local=new AccesLocal(context);
+            profile=local.getLastestProfile();
+            //getSerialize(context);
         }
         return ProfileControlleur.instance;
     }
@@ -38,8 +44,9 @@ public final class ProfileControlleur {
      * @param sexe
      */
     public void createProfile(Integer poids, Integer taille, Integer age, Integer sexe, Context context){
-        profile=new Profile(poids,taille,age,sexe);
-        Serializer.serialize(fineName,profile,context);
+        profile=new Profile(poids,taille,age,sexe,new Date());
+        local.Add(profile);
+       // Serializer.serialize(fineName,profile,context);
     }
 
     /**
